@@ -83,3 +83,27 @@ AppComponent (raíz da app)
                 Input
                 Button
 ```
+
+# Fluxo da inicialização da App
+
+```c#
+main.ts
+    |--[chama]--> Appmodule
+                        |--[chama]--> AppComponent 
+                                            |--[chama]--> CustomComponentA ...
+                                            |--[chama]--> CustomComponentB ...
+                                            |--[chama]--> CustomComponentC ...
+```
+
+Em Angular criamos os componentes e podemos colocar esses componenentes dentro de módulos, e definir se estes componentes irão ficar visíveis apenas para dentro do módulo ou se terão visibilidade para fora do módulo.
+
+Existe inicialmente o AppModulo, que é usado para inicializar a App. Dentro do AppModule tem um atributo chamado Bootstrap que aponta para o componente AppComponente (criado por padrão).
+O AppComponent faz referência aos demais componentes filhos da App.
+
+## Organização usando módulo
+
+Neste gráfico existe apenas um componente que poderia ficar visível apenas dentro do módulo, o componente "H". Por que? O componente H é apenas referenciado pelo componente "G" está dentro do mesmo módulo do componente "H". Todos os outros componetes são referenciados por componentes que estão em outros módulos, ou seja, todos os outros componentes precisam estar exportos para que possam ser referenciados pelos outro componentes.
+
+Ex: os módulos "E" e "F" precisam estar exportos para fora do módulo para que ele possa ser referenciado pelo componente B.
+
+![Organização Usando Módulo](oraganizacao-usando-modulo.png)
