@@ -28,6 +28,7 @@ O JSON Server lê um arquivo que tem um JSON, cira uma API baseada neste JSON.
 
 // --- crud/backend/db.json
 
+```json
 {
     "products": [
         {
@@ -46,7 +47,7 @@ O JSON Server lê um arquivo que tem um JSON, cira uma API baseada neste JSON.
             "price": 5000.89
         }
     ]
-}
+}```
 
 Criou-se um script para iniciar o backend:
 
