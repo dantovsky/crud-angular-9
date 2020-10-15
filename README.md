@@ -2,11 +2,25 @@
 # Projeto CRUD com Angular 9 - COD3R
 Repositório do curso: https://github.com/cod3rcursos/angular-crud
 
-# Comandos importante
+# Comandos utilizados
 
-npm init -y                 Iniciar o arquivo package.json
-npm i -g @angular/cli       Command line do Angular
-ng new minha-app            Criar novo projeto Angular
+Geral
+
+- npm init -y                 Iniciar o arquivo package.json
+- npm i -g @angular/cli       Command line do Angular
+- ng new minha-app            Criar novo projeto Angular
+
+Angular 
+
+- npm i -g @angular/cli                 Instalação do Angular CLI (Command Line Interface)
+- ng new fronted --minimal              Criação do profeto frontend (--minimal elimina arquivos desnecessários)
+- sudo npm start                        Inicia a app Angular (executa o "ng serve")
+- ng generate component comp/header     Cria um componente HeaderComponent dentro de "comp"
+- ng c g                                Forma reduzida do comando "ng generate component app-name"
+
+Angular Material
+
+- ng add @angular/material
 
 # TypeScript
 
@@ -84,26 +98,100 @@ AppComponent (raíz da app)
                 Button
 ```
 
-# Fluxo da inicialização da App
+# Fluxo de inicialização da App
+![Fluxo de inicialização da app](fluxo-init-app.png)
 
-```c#
-main.ts
-    |--[chama]--> Appmodule
-                        |--[chama]--> AppComponent 
-                                            |--[chama]--> CustomComponentA ...
-                                            |--[chama]--> CustomComponentB ...
-                                            |--[chama]--> CustomComponentC ...
-```
+    Nota: O "AppComponent" tem um seletor raiz que vai ser invocado no arquivo index.html.
 
 Em Angular criamos os componentes e podemos colocar esses componenentes dentro de módulos, e definir se estes componentes irão ficar visíveis apenas para dentro do módulo ou se terão visibilidade para fora do módulo.
 
 Existe inicialmente o AppModulo, que é usado para inicializar a App. Dentro do AppModule tem um atributo chamado Bootstrap que aponta para o componente AppComponente (criado por padrão).
 O AppComponent faz referência aos demais componentes filhos da App.
 
-## Organização usando módulo
+# Organização usando módulo
 
 Neste gráfico existe apenas um componente que poderia ficar visível apenas dentro do módulo, o componente "H". Por que? O componente H é apenas referenciado pelo componente "G" está dentro do mesmo módulo do componente "H". Todos os outros componetes são referenciados por componentes que estão em outros módulos, ou seja, todos os outros componentes precisam estar exportos para que possam ser referenciados pelos outro componentes.
 
 Ex: os módulos "E" e "F" precisam estar exportos para fora do módulo para que ele possa ser referenciado pelo componente B.
 
 ![Organização Usando Módulo](oraganizacao-usando-modulo.png)
+
+# Anatomia do módulo
+
+![Anatomia do módulo](anatomia-modulo.png)
+
+Existem 5 atributos dentro de um módulo, que são usados para configurá-lo:
+- Declarations
+- Imports
+- Exports
+- Providers
+- Bootstrap
+
+# Criação de app Angular e configs básicas
+
+- npm i -g @angular/cli             Instalação do Angular CLI (Command Line Interface)
+- ng new fronted --minimal          Criação do profeto frontend (--minimal elimina arquivos desnecessários)
+- sudo npm start                    Inicia a app Angular (executa o "ng serve")
+
+## Configs básicas
+
+Alteração dos atributos inlineTemplate e inlineStyle para "false", para que estejam em arquivos separados, e não na forma inline.
+
+```json
+...
+        @schematics/angular:component": {
+          "inlineTemplate": false,
+          "inlineStyle": false,
+          "skipTests": true
+        },
+...
+```
+
+# Instalção do Angular Material
+
+- ng add @angular/material
+
+Opções do diálogo selecionadas:
+? Choose a prebuilt theme: Indigo/Pink [ Preview: https://material.angular.io?theme=indigo-pink ]
+? Set up global Angular Material typography styles? Yes
+? Set up browser animations for Angular Material? Yes
+
+# Criaçaõ de com ponente
+
+- ng generate component comp/header     Cria um componente HeaderComponent dentro de "comp"
+- ng c g                                Forma reduzida do comando "ng generate component app-name"
+
+Formato básico do arquivo **header.component.ts**:
+
+```ts
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css']
+})
+export class HeaderComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+```
+
+    Após a criação do componente pelo Angular CLI, ele se encarregará de importar e declarar o novo componente no arquivo **app.module.ts**
+
+```ts
+import { HeaderComponent } from './components/template/header/header.component';
+
+@NgModule({
+    declarations: [
+    AppComponent,
+    HeaderComponent
+    ], ...
+})
+export class AppModule { }
+```
+
