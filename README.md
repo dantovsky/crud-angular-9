@@ -52,9 +52,11 @@ O JSON Server lê um arquivo que tem um JSON, cira uma API baseada neste JSON.
 
 Criou-se um script para iniciar o backend:
 
+```json
 "scripts": {
     "start": "json-server --watch db.json --port 3001"
 },
+```
 
 Exemplos de uso:
 
@@ -67,6 +69,7 @@ POST :: body >> url-encoded
 
 Exemplo de uma árvore de componente que compõe uma app:
 
+```js
 AppComponent (raíz da app)
     Header
         Nav
@@ -79,3 +82,4 @@ AppComponent (raíz da app)
             ProductForm
                 Input
                 Button
+```
