@@ -1,0 +1,11 @@
+.home .title {
+    font-size: 2.4rem;
+    font-weight: 300;
+    line-height: 1.2;
+    /* rem: unidade relativa que faz relacao com o tamanho raiz da página */
+    /* em: sempre relativo ao elemento pai */
+}
+
+.home .subtitle {
+    font-size: 0.8rem;
+}

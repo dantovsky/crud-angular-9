@@ -6,17 +6,17 @@ Repositório do curso: https://github.com/cod3rcursos/angular-crud
 
 Geral
 
-- npm init -y                 Iniciar o arquivo package.json
-- npm i -g @angular/cli       Command line do Angular
-- ng new minha-app            Criar novo projeto Angular
+- npm init -y                 => Iniciar o arquivo package.json
+- npm i -g @angular/cli       => Command line do Angular
+- ng new minha-app            => Criar novo projeto Angular
 
 Angular 
 
-- npm i -g @angular/cli                 Instalação do Angular CLI (Command Line Interface)
-- ng new fronted --minimal              Criação do profeto frontend (--minimal elimina arquivos desnecessários)
-- sudo npm start                        Inicia a app Angular (executa o "ng serve")
-- ng generate component comp/header     Cria um componente HeaderComponent dentro de "comp"
-- ng c g                                Forma reduzida do comando "ng generate component app-name"
+- npm i -g @angular/cli                 => Instalação do Angular CLI (Command Line Interface)
+- ng new fronted --minimal              => Criação do profeto frontend (--minimal elimina arquivos desnecessários)
+- sudo npm start                        => Inicia a app Angular (executa o "ng serve")
+- ng generate component comp/header     => Cria um componente HeaderComponent dentro de "comp"
+- ng g c                                => Forma reduzida do comando "ng generate component app-name"
 
 Angular Material
 
@@ -156,10 +156,10 @@ Opções do diálogo selecionadas:
 ? Set up global Angular Material typography styles? Yes
 ? Set up browser animations for Angular Material? Yes
 
-# Criaçaõ de com ponente
+# Criação de componente
 
-- ng generate component comp/header     Cria um componente HeaderComponent dentro de "comp"
-- ng c g                                Forma reduzida do comando "ng generate component app-name"
+- ng generate component comp/header     => Cria um componente HeaderComponent dentro de "comp"
+- ng g c                                => Forma reduzida do comando "ng generate component app-name"
 
 Formato básico do arquivo **header.component.ts**:
 
@@ -195,3 +195,88 @@ import { HeaderComponent } from './components/template/header/header.component';
 export class AppModule { }
 ```
 
+# Aula 16 - Bindins
+
+- Event Binding  
+Ligação de evento, ou seja, chamar uma função dentro de uma clsasse de um componente. Ex:
+    ```js
+    (click)="myFunction()"
+    ```
+
+- Binding de atributos  
+Atribuir a um atributo de um determinado elemento, um valor que está dentro do seu componente. Ex:
+    ```js
+    [id]="propertyVariable"
+    ```
+
+- Two Way Databinding  
+Diretiva não estrutural que liga um campo de formulário aos dados, onde a sua modificação acontece nas duas direções: dados -> formulario e formulario -> dados. Ex:
+    ```js
+    // Sintae conhecida como "banana na caixa"
+    [(ngModel)]="product.name"
+    ```
+# Conceitos importantes
+
+- Injeção de dependência  
+É quando o a linguagem/framework injeta uma dependência dentro de uma determinada classe, ou seja, ela fornece a instancia de algum objeto sem precisar passar isso de forma explícita. Ex:
+
+    ```js
+    constructor(private router: Router) { }
+    ```
+- Singleton  
+É uma classe que tem uma única instância. Os valores dos atributos são compartilhados sempre que usar o service, ou seja, estará sendo compartilhado a mesma instância. Ex: ao criar um service, o **"providedIn: root"* indica que se trata de um singleton. Ex de um service usando um snackbar para exibir mensagem:
+
+    ```js
+    import { Injectable } from '@angular/core';
+    import { MatSnackBar } from'@angular/material/snack-bar';
+
+    @Injectable({
+    providedIn: 'root'
+    })
+    export class ProductService {
+
+    constructor(private snackBar: MatSnackBar) { }
+
+    showMessage(msg: string): void {
+        this.snackBar.open(msg, 'X', {
+        duration: 3000,
+        horizontalPosition: "right",
+        verticalPosition: "top"
+        }) // mensagem, action, atributos
+    }
+    }
+    ```
+
+# Schematics
+
+Usando o Schematics, já recebemos uma tabela pronta, e a partir desse componente pronto, podemos criar um componente que precisamos de uma forma simples.
+
+Install Schematics  
+https://material.angular.io/guide/schematics
+
+# Alterando currency / locale de padrão em dolar
+
+Para alterar o curreny / locale para o Brasil:
+
+// --- html
+
+```html
+<td mat-cell *matCellDef="let row">{{row.price | currency: 'BRL'}}</td>
+```
+
+// --- app.module.ts
+
+```ts
+import { LOCALE_ID } from '@angular/core';
+import localePt from '@angular/common/locales/pt'
+import { registerLocaleData } from '@angular/common'
+
+registerLocaleData(localePt);
+
+@NgModule({
+    providers: [{
+    provide: LOCALE_ID,
+    useValue: 'pt-BR'
+  }]
+})
+```

@@ -16,9 +16,14 @@
       "price": 5000.89
     },
     {
-      "name": "Geladeira",
-      "price": "1913.99\n",
+      "name": "Lapis Preto",
+      "price": "2.50",
       "id": 4
+    },
+    {
+      "name": "Computador",
+      "price": "847",
+      "id": 5
     }
   ]
 }
