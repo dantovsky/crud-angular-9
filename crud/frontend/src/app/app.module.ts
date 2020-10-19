@@ -34,9 +34,15 @@ import { MatSortModule } from '@angular/material/sort'
 // Alteração do curreny / locale para pt-BR
 // import { LOCALE_ID } from '@angular/core'; // Já adicionado acima
 import localePt from '@angular/common/locales/pt'
-import { registerLocaleData } from '@angular/common'
+import { registerLocaleData } from '@angular/common';
+import { ProductUpdateComponent } from './components/product/product-update/product-update.component';
+import { ProductDeleteComponent } from './components/product/product-delete/product-delete.component';
+import { RedDirective } from './directives/red.directive';
+import { ForDirective } from './directives/for.directive'
 
 registerLocaleData(localePt);
+
+// Dentro de declarations ficam os componentes, diretivas e os pipes.
 
 @NgModule({
   declarations: [
@@ -48,7 +54,11 @@ registerLocaleData(localePt);
     ProductCrudComponent,
     ProductCreateComponent,
     ProductReadComponent,
-    ProductRead2Component
+    ProductRead2Component,
+    ProductUpdateComponent,
+    ProductDeleteComponent,
+    RedDirective,
+    ForDirective
   ],
   imports: [
     BrowserModule,

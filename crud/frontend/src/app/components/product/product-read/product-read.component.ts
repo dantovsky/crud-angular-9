@@ -14,7 +14,7 @@ export class ProductReadComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<Product>;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'price'];
+  displayedColumns = ['id', 'name', 'price', 'action'];
 
   // Injeção do ProductService no construtor
   constructor(private productService: ProductService) { }

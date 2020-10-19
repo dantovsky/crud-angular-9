@@ -1,6 +1,16 @@
- 
-# Projeto CRUD com Angular 9 - COD3R
-Repositório do curso: https://github.com/cod3rcursos/angular-crud
+# Material do curso "Angular 9 - Essencial", pela COD3R  
+Os principais recursos do framework à partir da construção de uma aplicação para aplicar um CRUD. https://www.cod3r.com.br/courses/angular-9-essencial
+
+![Demonstração Angular 9 - Essencial](angular-essencial-demo.gif)
+
+## Repositório Git do curso
+https://github.com/cod3rcursos/angular-crud
+
+# Como rodar o projeto
+
+1. Entrar na pasta "backend" e rodar o comando: **npm start**
+2. Entrar na pasta "frontend" e rodar o comando: **npm start**
+3. Aceder pelo browser o endereço **http://localhost:4200**
 
 # Comandos utilizados
 
@@ -17,6 +27,8 @@ Angular
 - sudo npm start                        => Inicia a app Angular (executa o "ng serve")
 - ng generate component comp/header     => Cria um componente HeaderComponent dentro de "comp"
 - ng g c                                => Forma reduzida do comando "ng generate component app-name"
+- ng g s comp/template/header/header    => Forma reduzida do comando "ng generate service service-name"
+- ng g d directives                     => Forma reduzida do comando "ng generate directive directive-name"
 
 Angular Material
 
@@ -280,3 +292,151 @@ registerLocaleData(localePt);
   }]
 })
 ```
+
+# Troca de dados entre componentes no Angular
+
+Utilização de BehaviorSubject para permitir que a partir de qualquer outro componente possa alterar atributos do header.
+
+Criação de interface no arquivo:
+components/template/header/header-data.model.ts
+
+```ts
+export interface HeaderData {
+    title: string
+    icon: string
+    routeUrl: string
+}
+```
+
+Adição de service:  
+ng g s components/template/header/header
+
+```ts
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { HeaderData } from './header-data.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class HeaderService {
+
+  private _headerData = new BehaviorSubject<HeaderData>({
+    title: 'Início',
+    icon: 'home',
+    routeUrl: ''
+  })
+
+  constructor() { }
+
+  get headerData(): HeaderData {
+    return this._headerData.value
+  }
+
+  set headerData(headerData: HeaderData) {
+    this._headerData.next(headerData)
+  }
+}
+```
+
+A partir de outro componente, por exemplo, o ProductCrudComponent, utilizou-se no contrutor:
+
+```ts
+constructor(private router: Router, private headerService: HeaderService) {
+    headerService.headerData = {
+        title: 'Cadastro de Produtos',
+        icon: 'storefront',
+        routeUrl: '/products'
+    }
+}
+```
+
+# Diretivas
+
+## Diretivas de atributo
+Trablha na parte de estilo e de comportamento.
+
+Adição de uma diretiva:  
+- ng g d directives/red => Forma reduzida do comando "ng generate directive directive-name"
+
+// --- directives/red
+
+```ts
+import { Directive, ElementRef } from '@angular/core';
+
+@Directive({
+  selector: '[appRed]'
+})
+export class RedDirective {
+
+  constructor(private el: ElementRef) {
+    el.nativeElement.style.color = '#e35e6b'
+  }
+}
+```
+
+// --- components/template/footer/footer.component.html
+
+```html
+<mat-toolbar class="footer">
+    <span>
+        Desenvolvido com <i class="material-icons v-middle" appRed>favorite</i> por 
+        <strong>Cod<span class="red">3</span>r</strong>
+    </span>
+</mat-toolbar>
+```
+
+## Diretivas estruturais
+Capaz de mexer e manipular na estrutura da página, sou seja, adiciona e remove elementos na DOM.
+
+Adição de diretiva:  
+- ng g d directives/for
+
+Ex:
+
+// --- directives/for.directive.ts
+
+```ts
+import { Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+
+@Directive({
+  selector: '[myFor]'
+})
+export class ForDirective implements OnInit {
+
+  @Input('myForEm') numbers: number[]
+  @Input('myForUsando') texto: string // apenas para experimento
+
+  constructor(
+    private container: ViewContainerRef,
+    private template: TemplateRef<any>) {
+    console.log('myFor')
+  }
+
+  ngOnInit(): void {
+    for(let number of this.numbers) {
+      this.container.createEmbeddedView(
+        this.template, { $implicit: number })
+    }
+    // *** //
+    console.log(this.numbers)
+    console.log(this.texto)
+  }
+}
+```
+
+// ---  views/home.component.html
+
+```html
+<mat-card class="home mat-elevation-z3">
+    <mat-card-title class="title">Bem Vindo!</mat-card-title>
+    <mat-card-subtitle class="subtitle">
+        Sistema para exemplificar a construção de um cadastro em Angular.
+    </mat-card-subtitle>
+    <p>Diretiva estrutural customizada</p>
+    <ul>
+        <li *myFor="let n em [1, 2, 3] usando 'oieee'">{{ n }}</li>
+    </ul>
+</mat-card>
+```
+
