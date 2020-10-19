@@ -440,3 +440,4 @@ export class ForDirective implements OnInit {
 </mat-card>
 ```
 
+Link do certificado de conclusão do curso: https://www.cod3r.com.br/certificates/w98teexqjo
