@@ -8,8 +8,8 @@ https://github.com/cod3rcursos/angular-crud
 
 # Como rodar o projeto
 
-1. Entrar na pasta "backend" e rodar o comando: **npm start**
-2. Entrar na pasta "frontend" e rodar o comando: **npm start**
+1. Entrar na pasta "backend" e rodar o comando: **npm install** e depois **npm start**
+2. Entrar na pasta "frontend" e rodar o comando: **npm install** e depois **npm start**
 3. Aceder pelo browser o endereço **http://localhost:4200**
 
 # Comandos utilizados
